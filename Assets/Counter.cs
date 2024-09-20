@@ -1,16 +1,21 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Counter : MonoBehaviour
 {
     private int _currentCount;
     private bool _isCounterEnabled = false;
+    private CounterRenderer _counterRenderer;
     private Coroutine _coroutine;
+
+    private void Awake()
+    {
+        _counterRenderer = new CounterRenderer();
+    }
 
     private void Start()
     {
-        Debug.Log(_currentCount);
+        _counterRenderer.Render(_currentCount);
     }
 
     private void Update()
@@ -37,7 +42,7 @@ public class Counter : MonoBehaviour
         {
             _currentCount++;
 
-            Debug.Log(_currentCount);
+            _counterRenderer.Render(_currentCount);
 
             yield return wait;
         }
