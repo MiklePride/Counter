@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -8,19 +9,18 @@ public class Counter : MonoBehaviour
     private CounterRenderer _counterRenderer;
     private Coroutine _coroutine;
 
-    private void Awake()
-    {
-        _counterRenderer = new CounterRenderer();
-    }
+    public event Action<int> CounterChenged;
 
     private void Start()
     {
-        _counterRenderer.Render(_currentCount);
+        CounterChenged?.Invoke(_currentCount);
     }
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        int leftMouseButton = 0;
+
+        if (Input.GetMouseButtonDown(leftMouseButton))
         {
             if (!_isCounterEnabled)
             {
@@ -42,7 +42,7 @@ public class Counter : MonoBehaviour
         {
             _currentCount++;
 
-            _counterRenderer.Render(_currentCount);
+            CounterChenged?.Invoke(_currentCount);
 
             yield return wait;
         }

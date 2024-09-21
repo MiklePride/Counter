@@ -1,8 +1,20 @@
 using UnityEngine;
 
-public class CounterRenderer
+public class CounterRenderer : MonoBehaviour
 {
-    public void Render(int value)
+    [SerializeField] private Counter _counter;
+
+    private void OnEnable()
+    {
+        _counter.CounterChenged += OnRender;
+    }
+
+    private void OnDestroy()
+    {
+        _counter.CounterChenged -= OnRender;
+    }
+
+    public void OnRender(int value)
     {
         Debug.Log(value);
     }
